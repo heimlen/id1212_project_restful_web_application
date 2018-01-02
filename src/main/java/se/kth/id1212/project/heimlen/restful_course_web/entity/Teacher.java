@@ -1,17 +1,28 @@
 package se.kth.id1212.project.heimlen.restful_course_web.entity;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
+import javax.persistence.*;
+import java.util.List;
+
+/**
+ * Entity representing how an Object, Teacher, relates to a table, Teacher, in the relational database.
+ */
 
 @Entity
 public class Teacher {
     @Id
     @GeneratedValue
     private int id;
+    @Column(nullable = false)
     private String firstName;
+    @Column(nullable = false)
     private String lastName;
+    @Column(nullable = false)
     private String emailAdress;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "teacher")
+    @JsonIgnoreProperties("teacher")
+    private List<Course> courses;
 
     public Teacher() {
     }
@@ -52,5 +63,9 @@ public class Teacher {
 
     public void setEmailAdress(String emailAdress) {
         this.emailAdress = emailAdress;
+    }
+
+    public List<Course> getCourses() {
+        return courses;
     }
 }

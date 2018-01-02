@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8"/>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
+    <meta name="description" content=""/>
+    <meta name="author" content=""/>
+    <link rel="icon" href="https://getbootstrap.com/favicon.ico"/>
+
+    <title>Courseweb</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="/static/bootstrap_files/bootstrap.css" rel="stylesheet" media="screen" th:href="@{/bootstrap_files/bootstrap.css}"/>
+    <link href="/static/bootstrap_files/bootstrap.min.css" rel="stylesheet" media="screen" th:href="@{/bootstrap_files/bootstrap.min.css}"/>
+    <link href="/static/bootstrap_files/starter-template.css" rel="stylesheet" media="screen" th:href="@{/bootstrap_files/starter-template.css}"/>
+</head>
+
+<body>
+<main role="main" class="container">
+
+    <div class="starter-template">
+<div id="editDiv">
+    <p th:text="'Edit teacher with ID ' + ${teacher.id}">Edit teacher with ID # </p>
+    <form action="#" th:action="@{/teachers/{firstName}/edit(firstName=${teacher.firstName})}" th:method="put" th:object="${teacher}">
+        <label for="editFirstName">new first-name</label>
+        <input id="editFirstName" type="text" th:field="*{firstName}"/>
+        <label for="editLastName">new last-name</label>
+        <input id="editLastName" type="text" th:field="*{lastName}"/>
+        <label for="editEmailAdress">new email-address</label>
+        <input id="editEmailAdress" type="text" th:field="*{emailAdress}"/>
+        <input type="hidden" name="_method" value="put"/>
+        <input type="submit" value="Put"/>
+    </form>
+</div>
+    </div>
+</main>
+</body>
+</html>

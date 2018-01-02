@@ -1,0 +1,7 @@
+.table > thead > tr > th {
+    text-align: center;
+}
+
+.addTeacher {
+    padding: 25px;
+}

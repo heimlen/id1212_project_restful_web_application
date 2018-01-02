@@ -1,6 +1,12 @@
 package se.kth.id1212.project.heimlen.restful_course_web.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import javax.persistence.*;
+
+/**
+ * Entity representing how an Object, Course, relates to a table, Course, in the relational database.
+ */
 
 @Entity
 public class Course {
@@ -8,10 +14,15 @@ public class Course {
     @Id
     @GeneratedValue
     private int id;
+    @Column(nullable = false)
     private String displayName;
+    @Column(nullable = false)
     private String name;
+    @Column(nullable = false)
     private int period;
-    @ManyToOne(cascade=CascadeType.ALL)
+    //Cascade-type persist, so that removing a course does not remove all courses sharing teacher as well as the teacher.
+    @ManyToOne(cascade=CascadeType.PERSIST, fetch=FetchType.EAGER)
+    @JsonIgnoreProperties("courses")
     private Teacher teacher;
 
     public Course() {

@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8"/>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
+    <meta name="description" content=""/>
+    <meta name="author" content=""/>
+    <link rel="icon" href="https://getbootstrap.com/favicon.ico"/>
+
+    <title>Courseweb</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="/static/bootstrap_files/bootstrap.css" rel="stylesheet" media="screen" th:href="@{/bootstrap_files/bootstrap.css}"/>
+    <link href="/static/bootstrap_files/bootstrap.min.css" rel="stylesheet" media="screen" th:href="@{/bootstrap_files/bootstrap.min.css}"/>
+    <link href="/static/bootstrap_files/starter-template.css" rel="stylesheet" media="screen" th:href="@{/bootstrap_files/starter-template.css}"/>
+    <link href="/static/css/general.css" rel="stylesheet" media="screen" th:href="@{/css/general.css}"/>
+
+</head>
+
+<body>
+
+<nav class="navbar navbar-expand-md navbar-dark bg-dark fixed-top">
+    <a class="navbar-brand" href="#">Courseweb</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarsExampleDefault">
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item">
+                <a class="nav-link" href="/">Home <span class="sr-only">(current)</span></a>
+            </li>
+            <li class="nav-item active">
+                <a class="nav-link" href="courses.html">Courses</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="teachers.html">Teachers</a>
+            </li>
+        </ul>
+    </div>
+</nav>
+
+<main role="main" class="container">
+
+    <div class="starter-template">
+        <h1>Courses</h1>
+        <h2>These are the courses currently registered on the course-web!</h2>
+        <table class="table" th:action="@{/courses}" th:object="${listOfCourses}">
+            <thead>
+            <tr>
+                <th>#</th>
+                <th>Course Code</th>
+                <th>Name of Course</th>
+                <th>Period</th>
+                <th>Name of Teacher</th>
+                <th>Utility</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="course : ${listOfCourses}">
+                <th scope="row" th:text="${course.id}"></th>
+                <td th:text="${course.displayName}"></td>
+                <td th:text="${course.name}"></td>
+                <td th:text="${course.period}"></td>
+                <td th:text="${course.teacher.firstName} + ' ' + ${course.teacher.lastName}"></td>
+                <td>
+                    <form th:action="@{'courses/' + ${course.displayName} + '.json'}">
+                        <input type="submit" value="Raw-data"/>
+                    </form>
+                    <form th:action="@{'courses/' + ${course.displayName} + '/edit'}">
+                        <input type="submit" value="Edit"/>
+                    </form>
+                    <form th:action="@{/courses/{dName}(dName=${course.displayName})}" th:method="delete">
+                        <input type="hidden" name="_method" value="delete"/>
+                        <input type="submit" value="Delete"/>
+                    </form>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+        <div class="col-sm-4 addCourse">
+            <p>Add a new Course.</p>
+            <form action="#" th:action="@{/courses.html}" th:object="${course}" method="post">
+                <label for="DisplayName">new display-name</label>
+                <input id="displayName" type="text" th:field="*{displayName}"/>
+                <label for="Name">new name</label>
+                <input id="name" type="text" th:field="*{name}"/>
+                <label for="Period">new period</label>
+                <input id="period" type="text" th:field="*{period}"/>
+                <p>Add existing/new Teacher</p>
+                <label for="FirstName">new first-name</label>
+                <input id="firstName" type="text" th:field="*{teacher.firstName}"/>
+                <label for="LastName">new last-name</label>
+                <input id="lastName" type="text" th:field="*{teacher.lastName}"/>
+                <label for="EmailAdress">new email-address</label>
+                <input id="emailAdress" type="text" th:field="*{teacher.emailAdress}"/>
+                <input type="submit" />
+            </form>
+        </div>
+    </div>
+
+</main><!-- /.container -->
+
+
+<!-- Bootstrap core JavaScript
+================================================== -->
+<!-- Placed at the end of the document so the pages load faster -->
+<script src="/static/bootstrap_files/jquery-3.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+<script src="/static/bootstrap_files/popper.js"></script>
+<script src="/static/bootstrap_files/bootstrap.js"></script>
+
+
+<div id="hzPanel">
+
+</div>
+</body>
+</html>
